@@ -17,6 +17,7 @@ object RemoveDataSkew extends App {
 
   import spark.implicits._
 
+  // DataFrame 1
   val df1 = Seq(
     ("x", "bc"),
     ("x", "ce"),
@@ -28,6 +29,7 @@ object RemoveDataSkew extends App {
   ).toDF()
   df1.show(10,false)
 
+  //DataFrame2
   val df2 = Seq(
     ("x", "gkl"),
     ("y", "nmb"),
@@ -36,6 +38,7 @@ object RemoveDataSkew extends App {
 
   df2.show(10,false)
 
+  // Method to eliminate data skewness
   def elimnateDataSkew(leftTable: DataFrame, leftCol: String, rightTable: DataFrame) = {
 
     var df1 = leftTable
@@ -55,5 +58,11 @@ object RemoveDataSkew extends App {
   df3.show(100, false)
   df4.show(100, false)
 
+  //join after elminating data skewness
+  df3.join(
+    df4,
+    df3.col("id")<=> df4.col("id")
+  )
+    .show(100,false)
 
 }
