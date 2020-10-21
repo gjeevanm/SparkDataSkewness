@@ -61,8 +61,8 @@ object RemoveDataSkew extends App {
   //join after elminating data skewness
   df3.join(
     df4,
-    df3.col("id")<=> df4.col("id")
-  )
+    df3.col("_1")<=> concat(df4.col("_1"),lit("_"),df4.col("explodedCol")))
+
     .show(100,false)
 
 }
